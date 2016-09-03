@@ -35,9 +35,9 @@ def main():
             print("There are no completed items")
 
     def user_input():
-        request_pool = ['R', 'C', 'A', 'M', 'Q']
+        valid_request_entries = ['R', 'C', 'A', 'M', 'Q']
         user_request = input(">>> ").upper()
-        while user_request not in request_pool:
+        while user_request not in valid_request_entries:
             print("Not valid")
             user_request = input(">>> ").upper()
         return user_request
@@ -67,6 +67,32 @@ def main():
         elif request == 'C':
             print_completed_items()
             request = user_input()
+        elif request == 'A':
+            entered_item_name = input("Name: ")
+            while entered_item_name.strip() == "":#Enter name and validates
+                print("Input can not be blank")
+                entered_item_name = input("Name: ")
+            valid_price = False #Enter price and validates
+            while valid_price == False:
+                try:
+                    entered_item_price = float(input("Price: $"))
+                    valid_price = True
+                except ValueError:
+                    print("Invalid Price. Must be number")
+            #TODO Add price >= 0 validation
+            valid_priority_entries= ['1','2','3']#Enter priority and validates
+            entered_item_priority = input("Priority: ")
+            while entered_item_priority not in valid_priority_entries:
+                print("Invalid priority. Enter 1,2 or 3")
+                entered_item_priority = input("Priority: ")
+            #TODO Print added item with formsat: Watch, $50.00 (priority 2) added to shopping list
+            items_names.append(entered_item_name)
+            items_prices.append(entered_item_price)
+            items_priorities.append(entered_item_priority)
+            items_status.append('r')
+            request = user_input()
+
+
 
 
 main()
