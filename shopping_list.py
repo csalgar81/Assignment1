@@ -155,6 +155,14 @@ def main():
             print("Menu\nR - List Required Items\nC - List Completed Items\nA - Add new item\nM - mark an item as completed\nQ - Quit")
             request = get_user_input()
 
+    # TODO SAVING THE FNAL FILE IS NOT WORKING (FOLLOWING LINES)
+    items_file.close()
+    final_items_file = open("items.csv", 'w')
+    total_number_of_items = len(items_names)
+    for i in range(0,total_number_of_items):
+        print(items_names[i],",",items_prices[i],",",items_priorities[i],",",items_status[i], file = final_items_file )
+    final_items_file.close()
+
 
 
 
