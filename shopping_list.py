@@ -1,33 +1,31 @@
-def main():
+def print_required_items():
+    row_number = 0
+    i = 0
+    total_price=0
+    there_are_required_items = False
+    for status in items_status:
+        if status == 'r':
+            print("{}.  {:<17}$  {:<6.2f} ({})".format(row_number, items_names[i], items_prices[i], items_priorities[i]))
+            row_number += 1
+            total_price += items_prices[i]
+            there_are_required_items = True
+        i += 1
+    if there_are_required_items:
+        print("Total expected price for {} items: ${:.2f}".format(row_number,total_price))
+        number_of_required_items = i
+    else:
+        print("There are no required itmes")
 
-    def print_required_items():
-        row_number = 0
-        i = 0
-        total_price=0
-        there_are_required_items = False
-        for status in items_status:
-            if status == 'r':
-                print("{}.  {:<17}$  {:<6.2f} ({})".format(row_number, items_names[i], items_prices[i], items_priorities[i]))
-                row_number += 1
-                total_price += items_prices[i]
-                there_are_required_items = True
-            i += 1
-        if there_are_required_items:
-            print("Total expected price for {} items: ${:.2f}".format(row_number,total_price))
-            number_of_required_items = i
-        else:
-            print("There are no required itmes")
-
-    def get_user_input():
-        valid_request_entries = ['R', 'C', 'A', 'M', 'Q']
+def get_user_input():
+    valid_request_entries = ['R', 'C', 'A', 'M', 'Q']
+    user_request = input(">>> ").upper()
+    while user_request not in valid_request_entries:
+        print("Not valid")
         user_request = input(">>> ").upper()
-        while user_request not in valid_request_entries:
-            print("Not valid")
-            user_request = input(">>> ").upper()
-        return user_request
+    return user_request
 
     # MAIN PROGRAM STARTS HERE
-
+def main():
     # Loads .csv file
     import csv
     items_file = open("items.csv", "r")
@@ -36,7 +34,9 @@ def main():
     items_prices = []
     items_priorities = []
     items_status = []
+    items = []
     for row in items_reader:
+        items.append([row[0], float(row[1])])
         items_names.append(row[0])
         items_prices.append(float(row[1]))
         items_priorities.append(row[2])
