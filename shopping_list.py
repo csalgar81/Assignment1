@@ -1,6 +1,20 @@
+# CARLOS SALGAR, 9 September 2016
+# https://github.com/csalgar81/Assignment1
+
 def main():
-    def get_user_user_choice_from_menu():
-        valid_request_entries = ['R', 'C', 'A', 'M', 'Q']
+
+    valid_request_entries = ['R', 'C', 'A', 'M', 'Q']
+    valid_priority_entries = ['1', '2', '3']
+
+    """
+    function get_user_choice_from_menu()
+        get user_request
+        while user_request not in valid_request_entries
+            print 'not valid'
+            get user_request
+        return user_request
+    """
+    def get_user_choice_from_menu():
         user_request = input(">>> ").upper()
         while user_request not in valid_request_entries:
             print("Not valid")
@@ -11,6 +25,24 @@ def main():
         print("Menu\nR - List Required Items\nC - List Completed Items\nA - Add new item\nM - "
               "mark an item as completed\nQ - Quit")
 
+    """
+    function print_requied_items
+        row_number = 0
+        i = 0
+        total_price = 0
+        there_are_required_items = False
+        for item_status in items_status_list
+            if item_status = 'r'
+                print row_number, item_name, item_price, item_priority
+                row_number +=1
+                total_price += item_price
+                there_are_required_items = True
+            i += 1
+        if there_are_required_items = True
+            print total_price
+        else
+            print "There are no required items"
+    """
     def print_required_items():
         row_number = 0
         i = 0
@@ -69,7 +101,6 @@ def main():
         return entered_item_price
 
     def get_new_item_priority():
-        valid_priority_entries = ['1', '2', '3']
         entered_item_priority = input("Priority: ")
         while entered_item_priority not in valid_priority_entries:
             print("Invalid priority. Enter 1,2 or 3")
@@ -97,6 +128,16 @@ def main():
                 print("Invalid item.  Must be an integer")
         return item_to_mark_as_completed
 
+    def save_items_to_csv_file():
+        items_file.close()
+        final_items_file = open("items.csv", 'w')
+        total_number_of_items = len(items_names)
+        for i in range(0, total_number_of_items):
+            print(items_names[i], ",", items_prices[i], ",", items_priorities[i], ",", items_status[i],
+                  file=final_items_file)
+        final_items_file.close()
+
+
     # MAIN PROGRAM STARTS HERE
 
     # Loads .csv file
@@ -117,7 +158,7 @@ def main():
 
     print_menu()
 
-    next_request = get_user_user_choice_from_menu()
+    next_request = get_user_choice_from_menu()
 
     while next_request != 'Q':
 
@@ -125,13 +166,13 @@ def main():
 
             print_required_items()
             print_menu()
-            next_request = get_user_user_choice_from_menu()
+            next_request = get_user_choice_from_menu()
 
         elif next_request == 'C':
 
             print_completed_items()
             print_menu()
-            next_request = get_user_user_choice_from_menu()
+            next_request = get_user_choice_from_menu()
 
         elif next_request == 'A':
 
@@ -151,7 +192,7 @@ def main():
                                                                             new_item_priority))
 
             print_menu()
-            next_request = get_user_user_choice_from_menu()
+            next_request = get_user_choice_from_menu()
 
         elif next_request == 'M':
 
@@ -167,16 +208,8 @@ def main():
 
             print_menu()
 
-            next_request = get_user_user_choice_from_menu()
+            next_request = get_user_choice_from_menu()
 
-    # TODO SAVING THE FNAL FILE IS NOT WORKING (FOLLOWING LINES)
-    items_file.close()
-    final_items_file = open("items.csv", 'w')
-    total_number_of_items = len(items_names)
-    for i in range(0, total_number_of_items):
-        print(items_names[i], ",", items_prices[i], ",", items_priorities[i], ",", items_status[i],
-              file=final_items_file)
-    final_items_file.close()
-
-
+    # If user selects 'Q', save all items to csv.file
+    save_items_to_csv_file()
 main()
